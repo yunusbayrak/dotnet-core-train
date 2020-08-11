@@ -31,6 +31,11 @@ namespace Core.DataAccess.EntityFramework.Bases
             }
         }
 
+        public IQueryable<TEntity> Include(Expression<Func<TEntity, object>> includeExpression)
+        {
+            return _context.Set<TEntity>().Include(includeExpression);
+        }
+
         public virtual IQueryable<TEntity> GetEntityQuery(params string[] entitiesToInclude)
         {
             try

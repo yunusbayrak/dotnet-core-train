@@ -124,14 +124,15 @@ namespace Business.Services
         {
             try
             {
-                List<IhbarModel> ihbarlar = _ihbarDal.GetEntities().OrderBy(i => i.Tarih).ThenBy(i => i.Yer).Select(i => new IhbarModel
+                List<IhbarModel> ihbarlar = _ihbarDal.Include(x=>x.IhbarDurumu).ToList().OrderBy(i => i.Tarih).ThenBy(i => i.Yer).Select(i => new IhbarModel
                 {
                     Id = i.Id,
                     Guid = i.Guid,
                     Ozet = i.Ozet,
                     Tarih = i.Tarih,
                     Yer = i.Yer,
-                    IhbarDurumuId = i.IhbarDurumuId
+                    IhbarDurumuId = i.IhbarDurumuId,
+                    IhbarDurumu = i.IhbarDurumu.Adi
                 }).ToList();
                 return ihbarlar;
             }
