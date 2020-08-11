@@ -124,7 +124,7 @@ namespace Business.Services
         {
             try
             {
-                List<IhbarModel> ihbarlar = _ihbarDal.Include(x=>x.IhbarDurumu).ToList().OrderBy(i => i.Tarih).ThenBy(i => i.Yer).Select(i => new IhbarModel
+                List<IhbarModel> ihbarlar = _ihbarDal.Include(x=>x.IhbarDurumu).OrderBy(i => i.Tarih).ThenBy(i => i.Yer).Select(i => new IhbarModel
                 {
                     Id = i.Id,
                     Guid = i.Guid,
