@@ -28,11 +28,12 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Aciklama")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("varchar(5000)")
                         .HasMaxLength(5000);
 
                     b.Property<string>("Guid")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<int>("IhbarId")
                         .HasColumnType("int");
@@ -48,7 +49,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Yer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
 
@@ -69,14 +71,15 @@ namespace DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Guid")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<int>("IhbarDurumuId")
                         .HasColumnType("int");
 
                     b.Property<string>("Ozet")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("varchar(5000)")
                         .HasMaxLength(5000);
 
                     b.Property<DateTime>("Tarih")
@@ -84,7 +87,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Yer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
 
@@ -102,11 +106,12 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Adi")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("varchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("Guid")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
@@ -122,15 +127,55 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Adi")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("varchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("Guid")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
                     b.ToTable("IslemDurumu");
+                });
+
+            modelBuilder.Entity("Entity.Entities.Kullanici", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Aktif")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Guid")
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("KullaniciAdi")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int?>("PersonelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RolId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Sifre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonelId");
+
+                    b.HasIndex("RolId");
+
+                    b.ToTable("Kullanici");
                 });
 
             modelBuilder.Entity("Entity.Entities.Olay", b =>
@@ -141,14 +186,15 @@ namespace DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Guid")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("IlkNeden")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OlusSekli")
                         .IsRequired()
-                        .HasColumnType("nvarchar(500)")
+                        .HasColumnType("varchar(500)")
                         .HasMaxLength(500);
 
                     b.Property<DateTime>("Tarih")
@@ -156,8 +202,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Yer")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("varchar(200)")
+                        .HasMaxLength(200);
 
                     b.HasKey("Id");
 
@@ -172,7 +218,8 @@ namespace DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Guid")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<int>("IhbarId")
                         .HasColumnType("int");
@@ -198,40 +245,37 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("AdSoyad")
                         .IsRequired()
-                        .HasColumnType("nvarchar(250)")
+                        .HasColumnType("varchar(250)")
                         .HasMaxLength(250);
 
                     b.Property<string>("Guid")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
                     b.ToTable("Personel");
                 });
 
-            modelBuilder.Entity("Entity.Entities.PersonelIhbar", b =>
+            modelBuilder.Entity("Entity.Entities.Rol", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Adi")
+                        .IsRequired()
+                        .HasColumnType("varchar(50)")
+                        .HasMaxLength(50);
+
                     b.Property<string>("Guid")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IhbarId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonelId")
-                        .HasColumnType("int");
+                        .HasColumnType("varchar(100)")
+                        .HasMaxLength(100);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IhbarId");
-
-                    b.HasIndex("PersonelId");
-
-                    b.ToTable("PersonelIhbar");
+                    b.ToTable("Rol");
                 });
 
             modelBuilder.Entity("Entity.Entities.Faaliyet", b =>
@@ -264,6 +308,20 @@ namespace DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Entity.Entities.Kullanici", b =>
+                {
+                    b.HasOne("Entity.Entities.Personel", "Personel")
+                        .WithMany()
+                        .HasForeignKey("PersonelId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Entity.Entities.Rol", "Rol")
+                        .WithMany("Kullanicilar")
+                        .HasForeignKey("RolId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Entity.Entities.OlayIhbar", b =>
                 {
                     b.HasOne("Entity.Entities.Ihbar", "Ihbar")
@@ -275,21 +333,6 @@ namespace DataAccess.Migrations
                     b.HasOne("Entity.Entities.Olay", "Olay")
                         .WithMany("OlayIhbarlar")
                         .HasForeignKey("OlayId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Entity.Entities.PersonelIhbar", b =>
-                {
-                    b.HasOne("Entity.Entities.Ihbar", "Ihbar")
-                        .WithMany("PersonelIhbarlar")
-                        .HasForeignKey("IhbarId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Entity.Entities.Personel", "Personel")
-                        .WithMany("PersonelIhbarlar")
-                        .HasForeignKey("PersonelId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });

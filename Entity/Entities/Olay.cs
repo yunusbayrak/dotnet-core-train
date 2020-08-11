@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity.Entities
 {
@@ -9,10 +10,12 @@ namespace Entity.Entities
     {
         public string IlkNeden { get; set; }
         [Required]
-        [StringLength(500)]
+        [MaxLength(500)]
+        [Column(TypeName = "varchar(500)")]
         public string OlusSekli { get; set; }
         [Required]
-        [StringLength(100)]
+        [MaxLength(200)]
+        [Column(TypeName = "varchar(200)")]
         public string Yer { get; set; }
         public DateTime Tarih { get; set; }
 

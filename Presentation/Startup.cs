@@ -2,7 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Business.Services;
+using Business.Services.Bases;
 using DataAccess.Configs;
+using DataAccess.EntityFramework;
+using DataAccess.EntityFramework.Bases;
 using DataAccess.EntityFramework.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,8 +35,35 @@ namespace Presentation
             Config.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
             //services.AddDbContext<JkiContext>();
             services.AddScoped<DbContext, JkiContext>();
+            services.AddScoped<IOlayIhbarService, OlayIhbarService>();
+            services.AddScoped<IFaaliyetService, FaaliyetService>();
+            services.AddScoped<IIslemDurumuService, IslemDurumuService>();
+            services.AddScoped<IOlayService, OlayService>();
+            services.AddScoped<IPersonelService, PersonelService>();
+            services.AddScoped<IIhbarDurumuService, IhbarDurumuService>();
+            services.AddScoped<IIhbarService, IhbarService>();
+            services.AddScoped<IKullaniciService, KullaniciService>();
+            services.AddScoped<IRolService, RolService>();
+
+            services.AddScoped<OlayIhbarDalBase, OlayIhbarDal>();
+            services.AddScoped<FaaliyetDalBase, FaaliyetDal>();
+            services.AddScoped<IslemDurumuDalBase, IslemDurumuDal>();
+            services.AddScoped<OlayDalBase, OlayDal>();
+            services.AddScoped<PersonelDalBase, PersonelDal>();
+            services.AddScoped<IhbarDurumuDalBase, IhbarDurumuDal>();
+            services.AddScoped<IhbarDalBase, IhbarDal>();
+            services.AddScoped<KullaniciDalBase, KullaniciDal>();
+            services.AddScoped<RolDalBase, RolDal>();
+            // Auto Mapper Configurations
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddControllersWithViews();
-            new SeedData(new JkiContext());
+            //new SeedData(new JkiContext());
             //services.AddControllersWithViews().AddRazorRuntimeCompilation(); //launch.json dosyasýnda belirtildi.
         }
 

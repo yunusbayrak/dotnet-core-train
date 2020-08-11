@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -14,9 +15,12 @@ namespace Entity.Entities
         public int IslemDurumuId { get; set; }
         public int PersonelId { get; set; }
         [Required]
-        [StringLength(5000)]
+        [MaxLength(5000)]
+        [Column(TypeName = "varchar(5000)")]
         public string Aciklama { get; set; }
         [Required]
+        [MaxLength(200)]
+        [Column(TypeName = "varchar(200)")]
         public string Yer { get; set; }
         public DateTime Tarih { get; set; }
         public Personel Personel { get; set; }

@@ -21,6 +21,12 @@ namespace DataAccess.EntityFramework.Context
                 relationship.DeleteBehavior = DeleteBehavior.NoAction;                
             }
 
+            ////bu entity için default filter oluşturarak her sorguda silinmişmi kontrolünü otomatik yapar.
+            ////Sorgu yaparken default filtreleri iptal etmek için 
+            ////var faaliyetler = context.Faaliyet.IgnoreQueryFilters().ToList();
+            //modelbuilder.Entity<Faaliyet>().HasQueryFilter(c => !c.IsDeleted);
+
+
             base.OnModelCreating(modelbuilder);
         }
 
@@ -31,6 +37,7 @@ namespace DataAccess.EntityFramework.Context
         public DbSet<Olay> Olay { get; set; }
         public DbSet<OlayIhbar> OlayIhbar { get; set; }
         public DbSet<Personel> Personel { get; set; }
-        public DbSet<PersonelIhbar> PersonelIhbar { get; set; }
+        public DbSet<Kullanici> Kullanici { get; set; }
+        public DbSet<Rol> Rol { get; set; }
     }
 }

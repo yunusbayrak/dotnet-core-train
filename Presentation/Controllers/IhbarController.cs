@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Business.Services.Bases;
 using DataAccess.EntityFramework.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,14 +11,14 @@ namespace Presentation.Controllers
 {
     public class IhbarController : Controller
     {
-        private JkiContext _dbcontext;
-        public IhbarController(DbContext dbContext)
+        private readonly IIhbarService _ihbarService;
+        public IhbarController(IIhbarService ihbarService)
         {
-            _dbcontext = dbContext as JkiContext;
+            _ihbarService = ihbarService;
         }
         public IActionResult Index()
         {            
-            return View(_dbcontext.Ihbar.Include(x=>x.IhbarDurumu).ToList());
+            return View(_ihbarService.GetIhbarlar());
         }
     }
 }
