@@ -1,35 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using DataAccess.EntityFramework.Context;
+﻿using Business.Utils.Bases;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Presentation.Models;
+using System.Diagnostics;
 
 namespace Presentation.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly JkiContext _dbContext;
+        private readonly IControllerUtil _controllerUtil;
 
-        public HomeController(ILogger<HomeController> logger, DbContext dbContext)
+        public HomeController(ILogger<HomeController> logger, IControllerUtil controllerUtil)
         {
             _logger = logger;
-            _dbContext = dbContext as JkiContext;
+            _controllerUtil = controllerUtil;
         }
 
         public IActionResult Index()
         {
-            var aa = _dbContext.Ihbar.ToList();
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
+            _controllerUtil.SetLiActive("Home");
+            ViewBag.LiActives = _controllerUtil.LiActives;
             return View();
         }
 

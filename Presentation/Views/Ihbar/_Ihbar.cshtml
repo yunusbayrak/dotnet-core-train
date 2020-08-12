@@ -1,0 +1,57 @@
+﻿@using Presentation.Settings
+@model List<IhbarModel>
+
+@if (Model != null && Model.Count > 0)
+{
+    var recordsCount =  AppSettings.NoRecordsFound;
+    if (Model != null && Model.Count > 0)
+    {
+        recordsCount = Model.Count + " " + AppSettings.RecordsFound;
+    } 
+    <div class="records-count">
+        <span>@recordsCount</span>
+    </div>
+    <table id="ihbarTable" class="table table-responsive table-bordered">
+        <thead>
+        <tr>
+            <th>
+                Özet
+            </th>
+            <th>
+                Yer
+            </th>
+            <th>
+                Tarih
+            </th>
+            <th>
+                İhbar Durumu
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var ihbar in Model)
+        {
+            <tr>
+                <td>
+                    @ihbar.Ozet
+                </td>
+                <td>
+                    @ihbar.Yer
+                </td>
+                <td>
+                    @ihbar.TarihText
+                </td>
+                <td>
+                    @ihbar.IhbarDurumu
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="records-count">
+        <span>@AppSettings.NoRecordsFound</span>
+    </div>
+}

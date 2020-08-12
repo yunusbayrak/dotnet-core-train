@@ -1,53 +1,114 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Dictionary<string, string> liActives = ViewBag.LiActives as Dictionary<string, string>;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Presentation</title>
+    <title>XOX | @ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/lib/datatables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="~/lib/bootstrap-datepicker/css/bootstrap-datepicker3.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/main.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Presentation</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h3 class="header-text"><a class="text-decoration-none" asp-controller="Home" asp-action="Index">XOX</a></h3>
+            </div>
+            <ul class="list-unstyled components">
+                <li class="@liActives["Olay"]">
+                    <a class="a-sidebar" asp-controller="Olay" asp-action="Index"><i class="fas fa-calendar-alt"></i> Olaylar</a>
+                </li>
+                <li class="@liActives["Ihbar"]">
+                    <a class="a-sidebar" asp-controller="Ihbar"><i class="fas fa-info"></i> İhbarlar</a>
+                </li>
+            </ul>
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <ul class="list-unstyled admin">
+                    <p>Admin</p>
+                    <li class="nav-item @liActives["IslemDurumu"]">
+                        <a asp-controller="IslemDurumu" asp-action="Index" class="a-navbar"><i class="fas fa-th-list"></i> İşlem Durumları</a>
+                    </li>
+                    <li class="nav-item @liActives["Context"]">
+                        <a asp-controller="Context" asp-action="Seed" class="a-navbar"><i class="fas fa-database"></i> Veri Yükle</a>
+                    </li>
+                </ul>
+            }
+        </nav>
+        <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler navbar-button" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon navbar-span"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a href="#" id="sidebarCollapse" class="a-navbar" title="Menüyü Kapat">
+                                <i class="fas fa-list-alt"></i>
+                                <i id="i-collapse" class="fas fa-chevron-left"></i> Menü
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Ihbar" asp-action="Index">İhbarlar</a>
+                        <li class="nav-item @liActives["Home"]">
+                            <a asp-controller="Home" asp-action="Index" class="a-navbar"><i class="fas fa-home"></i> Ana Sayfa</a>
                         </li>
                     </ul>
+                    <div class="navbar-text">
+                        <ul class="navbar-nav mr-auto">
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item @liActives["Register"]">
+                                    <a asp-controller="Kullanici" asp-action="Register" class="a-navbar"><i class="fas fa-user-plus"></i> Kayıt</a>
+                                </li>
+                                <li class="nav-item @liActives["Login"]">
+                                    <a asp-controller="Kullanici" asp-action="Login" class="a-navbar"><i class="fas fa-sign-in-alt"></i> Giriş</a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <span class="s-navbar"><i class="fas fa-user"></i> @User.Identity.Name</span>
+                                </li>
+                                <li class="nav-item">
+                                    <a asp-controller="Kullanici" asp-action="Logout" class="a-navbar"><i class="fas fa-sign-out-alt"></i> Çıkış</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
                 </div>
+            </nav>
+            <div class="container">
+                @RenderBody()
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+            <br />
+            <footer class="border-top footer">
+                <div class="container">
+                    &copy; @DateTime.Now.Year - JKİP
+                </div>
+            </footer>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2020 - Presentation - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/lib/popper.js/umd/popper.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/font-awesome/js/all.min.js"></script>
+    <script src="~/lib/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/lib/datatables/js/dataTables.bootstrap4.js"></script>
+    <script src="~/lib/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="~/lib/bootstrap-datepicker/locales/bootstrap-datepicker.tr.min.js"></script>
+    <script src="~/js/datatables.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/main.js"></script>
+
     @RenderSection("Scripts", required: false)
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>

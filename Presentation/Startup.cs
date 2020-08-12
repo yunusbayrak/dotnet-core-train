@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Business.Services;
 using Business.Services.Bases;
+using Business.Utils;
+using Business.Utils.Bases;
+using Core.Business.Utils;
+using Core.Business.Utils.Bases;
 using DataAccess.Configs;
 using DataAccess.EntityFramework;
 using DataAccess.EntityFramework.Bases;
@@ -17,6 +21,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Presentation.Models;
+using Presentation.Settings;
 
 namespace Presentation
 {
@@ -62,7 +67,18 @@ namespace Presentation
 
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
+            services.AddSession();
+
+            services.AddScoped<TimeUtilBase, TimeUtil>();
+
+            services.AddScoped<IControllerUtil, ControllerUtil>();
+
+
             services.AddControllersWithViews();
+
+            AppSettings appSettings = new AppSettings();
+            var section = Configuration.GetSection("AppSettings");
+            section.Bind(appSettings);
             //new SeedData(new JkiContext());
             //services.AddControllersWithViews().AddRazorRuntimeCompilation(); //launch.json dosyasýnda belirtildi.
         }
@@ -86,7 +102,7 @@ namespace Presentation
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

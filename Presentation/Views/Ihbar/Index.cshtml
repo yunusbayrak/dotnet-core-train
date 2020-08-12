@@ -1,59 +1,77 @@
-﻿@model IEnumerable<Business.Models.IhbarModel>
+﻿@model IhbarIndexViewModel
 
-@{
-    ViewData["Title"] = "İhbarlar";
+@{ ViewData["Title"] = "İhbarlar"; }
+
+<h1>İhbarlar</h1>
+<hr />
+<form asp-action="Index" asp-controller="Ihbar" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#ihbarlar" autocomplete="off">
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-1">
+            <b>İhbar Durumu</b>
+        </div>
+        <div class="col-5">
+            <select asp-for="Filter.IhbarDurumuId" asp-items="Model.IhbarDurumlari" class="form-control" id="ihbarDurumu">
+                <option value="">-- Seçiniz --</option>
+            </select>
+        </div>
+        <div class="col-1">
+            <b>Özet</b>
+        </div>
+        <div class="col-5">
+            <input type="text" asp-for="Filter.Ozet" class="form-control" id="ozet" />
+        </div>
+    </div>
+    <div class="row row-padding">
+        <div class="col-1">
+            <b>Yer</b>
+        </div>
+        <div class="col-5">
+            <input type="text" asp-for="Filter.Yer" class="form-control" id="yer" />
+        </div>
+        <div class="col-1">
+            <b>Tarih</b>
+        </div>
+        <div class="col-5">
+            <div class="input-group">
+                @Html.TextBoxFor(e => e.Filter.TarihBaslangic, new { @class = "form-control date-picker" })
+                <div class="input-group-text">:</div>
+                @Html.TextBoxFor(e => e.Filter.TarihBitis, new { @class = "form-control date-picker" })
+            </div>
+        </div>
+    </div>
+    <div class="row row-padding">
+        <div class="offset-1 col-11">
+            <pushbutton type="submit" class="btn btn-primary search" text="Ara"></pushbutton>
+            <pushbutton class="btn btn-warning clear" text="Temizle"></pushbutton>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" id="ihbarlar">
+            <partial name="_Ihbar" model="Model.Ihbarlar" />
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.date-picker').datepicker({
+                format: "dd.mm.yyyy",
+                language: "tr",
+                autoclose: true
+            });
+            $('.clear').off('click');
+            $('.clear').on('click', function (event) {
+                event.preventDefault();
+                $('#ihbarDurumu').val("");
+                $('#ozet').val("");
+                $('#yer').val("");
+                $('.date-picker').val("");
+                $('.search').click();
+            });
+            BindDataTable("ihbarTable",);
+        });
+    </script>
 }
-
-<h1>İhbar Listesi</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table table-bordered table-hover table-responsive">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ozet)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Yer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tarih)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IhbarDurumu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Guid)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @(item.Ozet.Length > 100 ? item.Ozet.Substring(0,100) + "..." : item.Ozet)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Yer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tarih)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IhbarDurumu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Guid)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
