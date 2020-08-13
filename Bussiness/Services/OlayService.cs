@@ -1,10 +1,12 @@
 ﻿using Business.Models;
 using Business.Services.Bases;
+using Business.Utils;
 using DataAccess.EntityFramework.Bases;
 using Entity.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Business.Services
 {
@@ -13,12 +15,14 @@ namespace Business.Services
         private readonly OlayDalBase _olayDal;
         private readonly OlayIhbarDalBase _olayIhbarDal;
         private readonly IhbarDalBase _ihbarDal;
+        private readonly VW_OlayDalBase _VW_OlayDal;
 
-        public OlayService(OlayDalBase olayDal, OlayIhbarDalBase olayIhbarDal, IhbarDalBase ihbarDal)
+        public OlayService(OlayDalBase olayDal, OlayIhbarDalBase olayIhbarDal, IhbarDalBase ihbarDal, VW_OlayDalBase VW_OlayDal)
         {
             _olayDal = olayDal;
             _olayIhbarDal = olayIhbarDal;
             _ihbarDal = ihbarDal;
+            _VW_OlayDal = VW_OlayDal;
         }
 
         public void AddOlay(OlayModel olay, bool seedContext = false)
@@ -145,9 +149,12 @@ namespace Business.Services
                             IhbarId = olayIhbarIhbar.Id,
                             IhbarOzeti = olayIhbarIhbar.Ozet
                         };
-            query = query.OrderBy(e => e.IhbarId).ThenBy(e => e.Sira);
+            query = query.OrderBy(e => e.IhbarId);
             if (id != null)
                 query = query.Where(e => e.Id == id.Value);
+            //string q = query.ToSql();
+
+            var res = _olayDal.GetWithColumnNames(x => x.Id > 0, y => new { y.Id, y.IlkNeden });
             return query;
         }
 
@@ -155,7 +162,9 @@ namespace Business.Services
         {
             try
             {
-                IQueryable<OlayModel> query = GetOlayQuery();
+                //IQueryable<OlayModel> query = GetOlayQuery();
+                IQueryable<OlayModel> query = GetOlayViewQuery();
+
                 List<OlayModel> olaylarModel = query.ToList();
                 return olaylarModel;
             }
@@ -190,6 +199,22 @@ namespace Business.Services
             {
                 throw exc;
             }
+        }
+
+        private IQueryable<OlayModel> GetOlayViewQuery()
+        {
+            return _VW_OlayDal.GetEntityQuery().Select(x => new OlayModel()
+            {
+                Id = Convert.ToInt32(x.Id),
+                OlayId = x.OlayId,
+                Guid = x.Guid,
+                IlkNeden = x.IlkNeden,
+                OlusSekli = x.OlusSekli,
+                IhbarOzeti = x.IhbarOzeti,
+                Tarih = x.Tarih,
+                IhbarId = x.IhbarId,
+                Yer = x.Yer
+            });
         }
     }
 }

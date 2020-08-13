@@ -47,5 +47,7 @@ namespace Business.Models
 
         [DisplayName("İhbarlar")]
         public List<string> IhbarOzetleri { get; set; }
+
+        public int? OlayId { get; set; }
     }
 }

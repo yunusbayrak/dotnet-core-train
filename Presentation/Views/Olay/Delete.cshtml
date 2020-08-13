@@ -1,0 +1,17 @@
+﻿@model OlayDeleteViewModel
+
+@{
+    ViewData["Title"] = "Olay Sil";
+}
+
+<h1>Olay Sil</h1>
+<hr />
+<partial name="_Details" model="@Model.Olay" />
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Olay.Id" />
+    <pushbutton type="submit" class="btn btn-success" text="Evet"></pushbutton>
+    <a asp-action="Index" class="btn btn-danger">Hayır</a>
+}

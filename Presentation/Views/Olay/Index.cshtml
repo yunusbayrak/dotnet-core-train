@@ -1,0 +1,80 @@
+﻿@using System.Linq
+@using Presentation.Settings
+@model OlayIndexViewModel
+
+@{ ViewData["Title"] = "Olaylar"; }
+
+<h1>Olaylar</h1>
+<hr />
+@if (Model.Olaylar != null && Model.Olaylar.Count > 0)
+{
+<table id="olaylar" class="table table-striped table-bordered table-hover table-secondary">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                <label asp-for="Olaylar.FirstOrDefault().IlkNeden"></label>
+            </th>
+            <th>
+                <label asp-for="Olaylar.FirstOrDefault().OlusSekli"></label>
+            </th>
+            <th>
+                <label asp-for="Olaylar.FirstOrDefault().Yer"></label>
+            </th>
+            <th>
+                <label asp-for="Olaylar.FirstOrDefault().Tarih"></label>
+            </th>
+            <th>
+                <label asp-for="Olaylar.FirstOrDefault().Sira"></label>
+            </th>
+            <th>
+                <label asp-for="Olaylar.FirstOrDefault().IhbarOzeti"></label>
+            </th>
+            <th>
+                <a asp-controller="Olay" asp-action="Create" title="Yeni Olay"><i class="fas fa-plus-square"></i> Yeni Olay</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var olay in Model.Olaylar)
+        {
+<tr>
+    <td>
+        @olay.IlkNeden
+    </td>
+    <td>
+        @olay.OlusSekli
+    </td>
+    <td>
+        @olay.Yer
+    </td>
+    <td>
+        @olay.Tarih.Value.ToString("dd.MM.yyyy HH:mm")
+    </td>
+    <td>
+        @olay.Sira
+    </td>
+    <td>
+        <a asp-controller="Ihbar" asp-action="Index" asp-route-Id="@olay.IhbarId">@olay.IhbarOzeti</a>
+    </td>
+    <td>
+        <a asp-controller="Olay" asp-action="Details" asp-route-Id="@olay.Id" title="Olay Detayı"><i class="fas fa-info-circle"></i></a> |
+        <a asp-controller="Olay" asp-action="Edit" asp-route-Id="@olay.Id" title="Olay Düzenle"><i class="fas fa-edit"></i></a> |
+        <a asp-controller="Olay" asp-action="Delete" asp-route-Id="@olay.Id" title="Olay Sil"><i class="fas fa-trash"></i></a>
+    </td>
+</tr>
+}
+    </tbody>
+</table> }
+            else
+            {
+<div class="records-count">
+    <span>
+        @AppSettings.NoRecordsFound
+    </span>
+</div>}
+
+@section Scripts {
+    <script>
+        BindDataTable("olaylar", false, false);
+    </script>
+}

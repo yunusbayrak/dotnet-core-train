@@ -8,6 +8,7 @@ namespace Core.Data.Bases
         public int Id { get; set; }
         [MaxLength(100)]
         [Column(TypeName = "varchar(100)")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Guid { get; set; }
     }
 }

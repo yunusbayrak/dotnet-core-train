@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Core.Data.Bases;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,6 +30,15 @@ namespace Core.DataAccess.EntityFramework.Bases
             {
                 throw e;
             }
+        }
+
+        public dynamic GetWithColumnNames(Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, dynamic>> columns,
+    params Expression<Func<TEntity, object>>[] navigationProperties)
+        {
+            IQueryable<TEntity> query = _context.Set<TEntity>();
+            query = navigationProperties.Aggregate(query, (current, navigationProperty) => current.Include(navigationProperty));
+            dynamic entity = query.Where(where).Select(columns).FirstOrDefault();
+            return entity;
         }
 
         public IQueryable<TEntity> Include(Expression<Func<TEntity, object>> includeExpression)

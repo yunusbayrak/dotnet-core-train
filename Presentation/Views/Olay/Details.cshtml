@@ -1,0 +1,11 @@
+﻿@model OlayDetailsViewModel
+
+@{
+    ViewData["Title"] = "Olay Detayı";
+}
+
+<h1>Olay Detayı</h1>
+<hr />
+<partial name="_Details" model="@Model.Olay" />
+<hr />
+<a asp-action="Index" class="btn btn-success">Listeye Geri Dön</a>

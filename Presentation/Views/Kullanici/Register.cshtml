@@ -1,0 +1,54 @@
+﻿@model KullaniciRegisterViewModel
+
+@{
+    ViewData["Title"] = "Yeni Kullanıcı Kayıt";
+}
+
+<h1>Yeni Kullanıcı Kayıt</h1>
+<hr />
+@using (Html.BeginForm("Register", "Kullanici", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-lg-1 col-form-label">
+            <b><label asp-for="Kullanici.KullaniciAdi"></label></b>
+        </label>
+        <div class="col-sm-10 col-lg-6">
+            <input type="text" class="form-control" asp-for="Kullanici.KullaniciAdi" />
+            <span asp-validation-for="Kullanici.KullaniciAdi" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-lg-1 col-form-label">
+            <b><label asp-for="Kullanici.Sifre"></label></b>
+        </label>
+        <div class="col-sm-10 col-lg-6">
+            <input type="password" class="form-control" asp-for="Kullanici.Sifre" />
+            <span asp-validation-for="Kullanici.Sifre" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-lg-1 col-form-label">
+            <b><label asp-for="Kullanici.PersonelId"></label></b>
+        </label>
+        <div class="col-sm-10 col-lg-6">
+            <select asp-for="Kullanici.PersonelId" asp-items="Model.Personeller" class="form-control">
+                <option value="">-- Personel Değilim --</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="offset-sm-2 offset-lg-1 col-sm-10 col-lg-6">
+            <pushbutton type="submit" class="btn btn-primary" text="Kaydet"></pushbutton>
+        </div>
+    </div>
+    @if (TempData["Message"] != null)
+    {
+        <div class="form-group row">
+            <div class="offset-sm-2 offset-lg-1 col-sm-10 col-lg-6">
+                <span class="text-danger">@TempData["Message"]</span>
+            </div>
+        </div>
+    }
+}

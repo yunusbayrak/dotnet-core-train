@@ -18,7 +18,7 @@ namespace DataAccess.EntityFramework.Context
         {
             foreach (var relationship in modelbuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {
-                relationship.DeleteBehavior = DeleteBehavior.NoAction;                
+                relationship.DeleteBehavior = DeleteBehavior.NoAction;
             }
 
             ////bu entity için default filter oluşturarak her sorguda silinmişmi kontrolünü otomatik yapar.
@@ -39,5 +39,6 @@ namespace DataAccess.EntityFramework.Context
         public DbSet<Personel> Personel { get; set; }
         public DbSet<Kullanici> Kullanici { get; set; }
         public DbSet<Rol> Rol { get; set; }
+        public DbSet<VW_Olay> VW_Olay { get; set; }
     }
 }

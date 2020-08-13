@@ -1,0 +1,39 @@
+﻿@model IslemDurumuEditViewModel
+
+@{
+    ViewData["Title"] = "İşlem Durumu Düzenle";
+}
+
+<h1>İşlem Durumu Düzenle</h1>
+<hr />
+@using (Html.BeginForm("Edit", "IslemDurumu", FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(e => e.IslemDurumu.Id)
+    <div class="form-group row">
+        <label class="col-sm-2 col-lg-1 col-form-label">
+            <b>@Html.DisplayNameFor(e => e.IslemDurumu.Adi)*</b>
+        </label>
+        <div class="col-sm-10 col-lg-6">
+            @Html.TextBoxFor(e => e.IslemDurumu.Adi, new { @class = "form-control" })
+            @Html.ValidationMessageFor(e => e.IslemDurumu.Adi, null, new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="offset-sm-2 offset-lg-1 col-sm-10 col-lg-6">
+            <pushbutton type="submit" class="btn btn-primary" text="Kaydet"></pushbutton>
+            <pushbutton type="reset" class="btn btn-warning" text="İptal"></pushbutton>
+            <a asp-action="Index" class="btn btn-success">Listeye Geri Dön</a>
+            <br />
+            <span>* zorunlu alandır.</span>
+        </div>
+    </div>
+    @if (ViewBag.Message != null)
+    {
+        <div class="form-group row">
+            <div class="offset-sm-2 offset-lg-1 col-sm-10 col-lg-6">
+                <span class="text-danger">@ViewBag.Message</span>
+            </div>
+        </div>
+    }
+}

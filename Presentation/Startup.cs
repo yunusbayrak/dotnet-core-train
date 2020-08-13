@@ -59,6 +59,7 @@ namespace Presentation
             services.AddScoped<IhbarDalBase, IhbarDal>();
             services.AddScoped<KullaniciDalBase, KullaniciDal>();
             services.AddScoped<RolDalBase, RolDal>();
+            services.AddScoped<VW_OlayDalBase, VW_OlayDal>();
             // Auto Mapper Configurations
             var mapperConfig = new MapperConfiguration(mc =>
             {

@@ -1,0 +1,75 @@
+﻿@using Presentation.Settings
+@model IslemDurumuIndexViewModel
+
+@{
+    ViewData["Title"] = "İşlem Durumları";
+}
+
+<h1>İşlem Durumları</h1>
+<div class="records-count">
+    @{
+        var recordsCount = AppSettings.NoRecordsFound;
+        if (Model.IslemDurumlari != null && Model.IslemDurumlari.Count > 0)
+        {
+            recordsCount = Model.IslemDurumlari.Count + " " + AppSettings.RecordsFound;
+        }
+    }
+    <span>@recordsCount</span>
+</div>
+<table id="islemdurumlari" class="table">
+    <thead>
+        <tr>
+            <th>
+                Adı
+            </th>
+            <th>
+                <a asp-controller="IslemDurumu" asp-action="Create" title="Yeni İşlem Durumu"><i class="fas fa-plus-square"></i> Yeni İşlem Durumu</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var islemDurumu in Model.IslemDurumlari)
+        {
+            <tr>
+                <td>
+                    @islemDurumu.Adi
+                </td>
+                <td>
+                    <a asp-controller="IslemDurumu" asp-action="Edit" asp-route-Id="@islemDurumu.Id" title="İşlem Durumu Düzenle"><i class="fas fa-edit"></i></a> |
+                    <a asp-controller="IslemDurumu" asp-action="Delete" asp-route-Id="@islemDurumu.Id" title="İşlem Durumu Sil" class="delete"><i class="fas fa-trash"></i></a>
+                </td>
+            </tr>
+        }
+        @if (@TempData["Message"] != null)
+        {
+            <tr>
+                <td colspan="2">
+                    <span class="text-danger">@TempData["Message"]</span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts
+{
+    <link href="~/lib/AlertifyJS/css/alertify.min.css" rel="stylesheet" />
+    <link href="~/lib/AlertifyJS/css/themes/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/lib/AlertifyJS/alertify.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".delete").click(function (event) {
+                var url = $(this).attr("href");
+                event.preventDefault();
+                alertify.confirm("İşlem Durumu Sil",
+                    "Seçili işlem durumunu silmek istiyor musunuz?",
+                    function () {
+                        window.location.href = url;
+                    },
+                    function () {
+
+                    }).set("labels", { ok: "Evet", cancel: "Hayır" });
+            });
+        });
+    </script>
+}
