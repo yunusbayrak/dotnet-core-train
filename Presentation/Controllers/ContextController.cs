@@ -14,7 +14,7 @@ namespace Presentation.Controllers
 {
     public class ContextController : Controller
     {
-        private JkiContext _db;
+        private readonly JkiContext _db;
         private readonly IMapper _mapper;
         public ContextController(DbContext db, IMapper mapper)
         {

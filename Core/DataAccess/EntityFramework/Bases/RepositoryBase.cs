@@ -253,8 +253,7 @@ namespace Core.DataAccess.EntityFramework.Bases
             try
             {
                 entity.Guid = Guid.NewGuid().ToString();
-                var contextEntity = _context.Entry(entity);
-                contextEntity.State = EntityState.Added;
+                _context.Set<TEntity>().Add(entity);
                 if (Commit)
                     SaveChanges();
             }

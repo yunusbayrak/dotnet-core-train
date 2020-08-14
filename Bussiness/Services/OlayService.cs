@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using AutoMapper;
+using Business.Models;
 using Business.Services.Bases;
 using Business.Utils;
 using DataAccess.EntityFramework.Bases;
@@ -16,26 +17,24 @@ namespace Business.Services
         private readonly OlayIhbarDalBase _olayIhbarDal;
         private readonly IhbarDalBase _ihbarDal;
         private readonly VW_OlayDalBase _VW_OlayDal;
+        private readonly IMapper _mapper;
 
-        public OlayService(OlayDalBase olayDal, OlayIhbarDalBase olayIhbarDal, IhbarDalBase ihbarDal, VW_OlayDalBase VW_OlayDal)
+        public OlayService(OlayDalBase olayDal, OlayIhbarDalBase olayIhbarDal, IhbarDalBase ihbarDal, VW_OlayDalBase VW_OlayDal, IMapper mapper)
         {
             _olayDal = olayDal;
             _olayIhbarDal = olayIhbarDal;
             _ihbarDal = ihbarDal;
             _VW_OlayDal = VW_OlayDal;
+            _mapper = mapper;
         }
 
         public void AddOlay(OlayModel olay, bool seedContext = false)
         {
             try
             {
-                Olay olayEntity = new Olay
-                {
-                    IlkNeden = olay.IlkNeden,
-                    OlusSekli = olay.OlusSekli,
-                    Yer = olay.Yer,
-                    Tarih = new DateTime(olay.Tarih.Value.Year, olay.Tarih.Value.Month, olay.Tarih.Value.Day, Convert.ToInt32(olay.Saat), Convert.ToInt32(olay.Dakika), 0)
-                };
+                var olayEntity = _mapper.Map<Olay>(olay);
+                olayEntity.Tarih = new DateTime(olay.Tarih.Value.Year, olay.Tarih.Value.Month, olay.Tarih.Value.Day, Convert.ToInt32(olay.Saat), Convert.ToInt32(olay.Dakika), 0);
+
                 _olayDal.AddEntity(olayEntity);
                 olay.Id = olayEntity.Id;
                 if (!seedContext)
