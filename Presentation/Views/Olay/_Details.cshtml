@@ -3,6 +3,7 @@
 <div>
     <dl class="row">
         <dt class="col-sm-2">
+            <input type="hidden" asp-for="Id" />
             <label asp-for="IlkNeden"></label>
         </dt>
         <dd class="col-sm-10">
@@ -40,8 +41,7 @@
             {
                 @foreach (var ihbarOzeti in Model.IhbarOzetleri)
                 {
-                    @ihbarOzeti
-                    <br />
+                    <p>@ihbarOzeti</p>
                 }
             }
         </dd>

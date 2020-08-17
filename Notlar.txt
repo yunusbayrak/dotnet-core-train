@@ -1,0 +1,4 @@
+Visual studionun kullandýðý template dosyalarý bu klasörde, istenirse deðiþtirilebilir.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\ItemTemplates\CSharp\Web
+
+

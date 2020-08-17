@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation", "Presentation\Presentation.csproj", "{40DCF5CA-4724-46DC-8158-67E3A1D7108C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bussiness", "Bussiness\Bussiness.csproj", "{95DCCD0B-E1FB-483D-BC44-17656DDDB705}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bussiness", "Bussiness\Bussiness.csproj", "{95DCCD0B-E1FB-483D-BC44-17656DDDB705}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{72C4BFF9-6F67-40DA-9776-B6A838A347E1}"
+	ProjectSection(SolutionItems) = preProject
+		Notlar.txt = Notlar.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

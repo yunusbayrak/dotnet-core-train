@@ -161,8 +161,8 @@ namespace Business.Services
         {
             try
             {
-                //IQueryable<OlayModel> query = GetOlayQuery();
-                IQueryable<OlayModel> query = GetOlayViewQuery();
+                IQueryable<OlayModel> query = GetOlayQuery();
+                //IQueryable<OlayModel> query = GetOlayViewQuery();
 
                 List<OlayModel> olaylarModel = query.ToList();
                 return olaylarModel;
