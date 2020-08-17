@@ -9,7 +9,7 @@ using Presentation.Models;
 
 namespace Presentation.Controllers
 {
-    //[Authorize(Roles = "Admin,Kullanici")]
+    [Authorize(Roles = "Admin,Kullanici")]
     public class OlayController : Controller
     {
         private readonly IOlayService _olayService;

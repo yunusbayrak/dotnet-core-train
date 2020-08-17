@@ -99,7 +99,8 @@
                             <img src="~/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">@User.Identity.Name</a>
+                            <a href="#" class="d-block">@(User.Claims.FirstOrDefault(x=>x.Type==System.Security.Claims.ClaimTypes.GivenName)?.Value ?? User.Identity.Name)</a>
+                            
                         </div>
                     </div>
                 }

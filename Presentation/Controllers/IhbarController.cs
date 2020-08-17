@@ -2,13 +2,14 @@
 using Business.Services.Bases;
 using Business.Utils.Bases;
 using Core.MVC.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Presentation.Models;
 
 namespace Presentation.Controllers
 {
-    //[Authorize(Roles = "Admin,Kullanici")]
+    [Authorize(Roles = "Admin,Kullanici")]
     public class IhbarController : Controller
     {
         private readonly IIhbarService _ihbarService;

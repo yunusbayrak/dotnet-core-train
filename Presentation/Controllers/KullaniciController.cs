@@ -44,7 +44,8 @@ namespace Presentation.Controllers
                     var claims = new List<Claim>()
                     {
                         new Claim(ClaimTypes.Name, kullaniciModel.KullaniciAdi),
-                        new Claim(ClaimTypes.Role, kullaniciModel.Rol.Adi)
+                        new Claim(ClaimTypes.Role, kullaniciModel.Rol.Adi),
+                        new Claim(ClaimTypes.GivenName, kullaniciModel.Personel?.AdSoyad)
                     };
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
@@ -102,7 +103,7 @@ namespace Presentation.Controllers
                 }
                 else
                 {
-                    kullanici.RolId = (int) RolEnum.Kullanici;
+                    kullanici.RolId = (int)RolEnum.Kullanici;
                     _kullaniciService.AddKullanici(kullanici);
                     TempData["Message"] = "Yeni kullanıcı kaydı başarıyla gerçekleştirilmiştir. Kayıt onaylandıktan sonra sisteme giriş yapabilirsiniz.";
                     return RedirectToAction("Login");

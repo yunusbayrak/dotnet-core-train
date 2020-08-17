@@ -13,6 +13,7 @@ using DataAccess.Configs;
 using DataAccess.EntityFramework;
 using DataAccess.EntityFramework.Bases;
 using DataAccess.EntityFramework.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +39,13 @@ namespace Presentation
         public void ConfigureServices(IServiceCollection services)
         {
             Config.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(config =>
+                {
+                    config.LoginPath = "/Kullanici/Login";
+                    config.AccessDeniedPath = "/Kullanici/AccessDenied";
+                });
+
             //services.AddDbContext<JkiContext>();
             services.AddScoped<DbContext, JkiContext>();
             services.AddScoped<IOlayIhbarService, OlayIhbarService>();
@@ -102,7 +110,9 @@ namespace Presentation
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseSession();
             app.UseEndpoints(endpoints =>
             {
