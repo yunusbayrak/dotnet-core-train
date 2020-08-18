@@ -17,7 +17,8 @@ namespace Business.Utils
                 { "Register", "" },
                 { "Context", "" },
                 { "IslemDurumu", "" },
-                { "Ihbar", "" }
+                { "Ihbar", "" },
+                { "Cookies", "" }
             };
         }
 

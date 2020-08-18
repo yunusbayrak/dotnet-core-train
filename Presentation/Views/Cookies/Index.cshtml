@@ -1,0 +1,26 @@
+﻿@model List<KeyValuePair<string, string>>
+
+@{
+    ViewData["Title"] = "Cookies";
+}
+
+<h1>Cookies</h1>
+<hr />
+<h3>All Cookies:</h3>
+@foreach (var keyValue in Model)
+{
+    var cookie = "<span class='font-weight-bold'>Cookies[" + keyValue.Key + "]</span> = " + keyValue.Value;
+    @Html.Raw(cookie);
+    <br />
+    <br />
+}
+<hr />
+<a asp-action="Set" asp-route-key="name" asp-route-value="Çağıl Alsaç" asp-route-expiresInSeconds="1">Set Cookie for 1 Second</a>
+<br />
+<a asp-action="Set" asp-route-key="name" asp-route-value="Çağıl Alsaç">Set Cookie for 20 Minutes</a>
+<br />
+<a asp-action="Get" asp-route-key="name">Get Cookie</a>
+<br />
+<a asp-action="Remove" asp-route-key="name">Remove Cookie</a>
+<br />
+<a asp-action="Index">All Cookies</a>

@@ -1,0 +1,33 @@
+{
+	"info": {
+		"_postman_id": "281f7e97-59c2-4c71-831f-9e549145e316",
+		"name": "dotnet-core-train",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetIhbarlar",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/xml",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{jkurl}}/Ihbar",
+					"host": [
+						"{{jkurl}}"
+					],
+					"path": [
+						"Ihbar"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
