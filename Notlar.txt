@@ -2,3 +2,8 @@ Visual studionun kullandýðý template dosyalarý bu klasörde, istenirse deðiþtiril
 C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\ItemTemplates\CSharp\Web
 
 
+formbuilder open source
+https://formio.github.io/formio.js/app/builder
+
+
+

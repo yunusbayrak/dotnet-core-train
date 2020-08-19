@@ -27,6 +27,81 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "GetIhbar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{jkurl}}/Ihbar/1",
+					"host": [
+						"{{jkurl}}"
+					],
+					"path": [
+						"Ihbar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Ihbar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ihbarDurumu\": 1,\r\n    \"ozet\": \"postman post\",\r\n    \"yer\": \"Ankara\",\r\n    \"tarih\": \"2020-08-03T00:00:00\",\r\n    \"id\": 0,\r\n    \"guid\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{jkurl}}/Ihbar",
+					"host": [
+						"{{jkurl}}"
+					],
+					"path": [
+						"Ihbar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "31dcb4ca-543a-480c-a22f-b8689324294e",
+						"exec": [
+							"const response= pm.response.json();\r",
+							"pm.environment.set(\"token\",response.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{jkurl}}/Kullanici/Login",
+					"host": [
+						"{{jkurl}}"
+					],
+					"path": [
+						"Kullanici",
+						"Login"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

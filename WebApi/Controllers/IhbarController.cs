@@ -8,7 +8,7 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Admin,Kullanici")]
+    [Authorize(Roles = "Admin,Kullanici")]
     public class IhbarController : ControllerBase
     {
         private readonly IIhbarService _ihbarService;
