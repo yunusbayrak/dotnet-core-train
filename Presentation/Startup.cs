@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -84,6 +85,12 @@ namespace Presentation
 
 
             services.AddControllersWithViews();
+            services.Configure<RazorViewEngineOptions>(o =>
+            {
+                // {2} is area, {1} is controller,{0} is the action
+                // the component's path "Components/{ViewComponentName}/{ViewComponentViewName}" is in the action {0}
+                o.ViewLocationFormats.Add("/{0}" + RazorViewEngine.ViewExtension);
+            });
 
             AppSettings appSettings = new AppSettings();
             var section = Configuration.GetSection("AppSettings");

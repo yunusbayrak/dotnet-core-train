@@ -4,16 +4,17 @@
 
 <h1>İhbarlar</h1>
 <hr />
-<form asp-action="Index" asp-controller="Ihbar" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#ihbarlar" autocomplete="off">
+<form asp-action="Index" asp-controller="Ihbar" data-ajax="true" data-ajax-method="post" data-ajax-mode="replace" data-ajax-update="#ihbarlar" autocomplete="off" id="ajaxForm">
     @Html.AntiForgeryToken()
     <div class="row">
         <div class="col-1">
             <b>İhbar Durumu</b>
         </div>
         <div class="col-5">
-            <select asp-for="Filter.IhbarDurumuId" asp-items="Model.IhbarDurumlari" class="form-control" id="ihbarDurumu">
+            @*<select asp-for="Filter.IhbarDurumuId" asp-items="Model.IhbarDurumlari" class="form-control" id="ihbarDurumu">
                 <option value="">-- Seçiniz --</option>
-            </select>
+            </select>*@
+            @await Component.InvokeAsync("IhbarDurumu") 
         </div>
         <div class="col-1">
             <b>Özet</b>
@@ -71,7 +72,12 @@
                 $('.date-picker').val("");
                 $('.search').click();
             });
-            BindDataTable("ihbarTable",);
+            BindDataTable("ihbarTable");
+            $("button[type=submit]").on("click", function (e) {
+                alert("type=submit button click event");
+                //e.preventDefault();
+                //return false;
+            });
         });
     </script>
 }
